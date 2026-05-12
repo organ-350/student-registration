@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  padding: 2.5rem 1rem 3rem;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,209,197,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -80px; left: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,101,101,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 660px;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+}
+
+/* HEADER */
+.form-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 2.2rem 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(79,209,197,0.1);
+}
+
+.form-header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 40%;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(91,94,244,0.12);
+}
+
+.header-inner { position: relative; z-index: 1; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(79,209,197,0.18);
+  color: #4fd1c5;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 30px;
+  border: 1px solid rgba(79,209,197,0.28);
+  margin-bottom: 12px;
+}
+
+.form-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.form-header p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+}
+
+/* STEPS */
+.steps-bar {
+  display: flex;
+  background: #f7f8ff;
+  border-bottom: 1px solid #eaecf8;
+  padding: 0 2.5rem;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #b0b8d4;
+  border-bottom: 2.5px solid transparent;
+  transition: all 0.2s;
+}
+
+.step.active { color: #5b5ef4; border-bottom-color: #5b5ef4; }
+.step.done   { color: #38c9a9; border-bottom-color: #38c9a9; }
+
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  background: #e8eaf6; color: #b0b8d4; flex-shrink: 0;
+}
+
+.step.active .step-num { background: #5b5ef4; color: #fff; }
+.step.done   .step-num { background: #38c9a9; color: #fff; }
+
+/* FORM BODY */
+.form-body { padding: 2rem 2.5rem; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #5b5ef4;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #dde1f7, transparent);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.row.full { grid-template-columns: 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.2px;
+}
+
+.field label .req { color: #f56565; margin-left: 2px; }
+
+.field input,
+.field select,
+.field textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fefeff;
+  color: #1e293b;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #5b5ef4;
+  box-shadow: 0 0 0 4px rgba(91,94,244,0.1);
+  background: #fff;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #c4ccd8; font-size: 13px; }
+
+.field textarea { resize: none; height: 84px; line-height: 1.55; }
+
+.field input[readonly] {
+  background: #f7f8ff;
+  color: #94a3b8;
+  cursor: default;
+}
+
+.select-wrap { position: relative; }
+.select-wrap select { appearance: none; cursor: pointer; }
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #94a3b8;
+  pointer-events: none;
+}
+
+/* RADIO */
+.radio-group { display: flex; gap: 10px; }
+.radio-opt { flex: 1; position: relative; }
+.radio-opt input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.radio-opt label {
+  display: flex; align-items: center; justify-content: center;
+  padding: 9px 10px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 400;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fefeff;
+  gap: 6px;
+}
+
+.radio-opt input[type="radio"]:checked + label {
+  border-color: #5b5ef4;
+  background: #f0f0fe;
+  color: #5b5ef4;
+  font-weight: 600;
+}
+
+/* PHOTO */
+.photo-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 14px;
+  background: #f9f9ff;
+}
+
+.photo-circle {
+  width: 66px; height: 66px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e0fe, #ddd6fe);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.photo-circle i { font-size: 30px; color: #8b8ef8; }
+.photo-info p { font-size: 13.5px; font-weight: 600; color: #1e293b; margin-bottom: 3px; }
+.photo-info span { font-size: 11.5px; color: #94a3b8; }
+
+.upload-btn {
+  margin-top: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #c7d2fe;
+  background: #ededfe;
+  color: #5b5ef4;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: inline-block;
+}
+
+.upload-btn:hover { background: #ddd9fe; }
+
+/* DIVIDER */
+.divider { height: 1px; background: #f0f2fa; margin: 1.4rem 0; }
+
+/* CHECKBOX */
+.check-row {
+  display: flex; align-items: flex-start; gap: 10px; margin-top: 6px;
+}
+
+.check-row input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: #5b5ef4;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.check-row label {
+  font-size: 12.5px;
+  color: #64748b;
+  cursor: pointer;
+  line-height: 1.55;
+}
+
+.check-row label a { color: #5b5ef4; text-decoration: none; font-weight: 600; }
+.check-row label a:hover { text-decoration: underline; }
+
+/* FOOTER */
+.form-footer {
+  display: flex;
+  gap: 12px;
+  padding: 1.5rem 2.5rem;
+  background: #f7f8ff;
+  border-top: 1px solid #eaecf8;
+}
+
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 11px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-ghost {
+  background: #fff;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.btn-ghost:hover { border-color: #b0b8d4; color: #475569; }
+
+.btn-primary {
+  background: linear-gradient(135deg, #5b5ef4 0%, #8b5cf6 100%);
+  color: #fff;
+  flex: 1;
+  justify-content: center;
+  box-shadow: 0 5px 18px rgba(91,94,244,0.32);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(91,94,244,0.4);
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+/* PROGRESS */
+.progress-dots {
+  display: flex; gap: 7px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.22);
+  transition: background 0.2s;
+}
+
+.dot.active { background: #4fd1c5; width: 22px; border-radius: 4px; }
+
+/* SUCCESS OVERLAY */
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,32,39,0.75);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-overlay.show { display: flex; }
+
+.success-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+}
+
+.success-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38c9a9, #1d9e75);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.2rem;
+}
+
+.success-icon i { font-size: 34px; color: #fff; }
+
+.success-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.success-card p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.success-id {
+  background: #f0f0fe;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 1.5rem;
+  font-size: 13px;
+  color: #5b5ef4;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
+  .form-body, .form-footer, .steps-bar { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .form-header { padding: 1.5rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="form-card">
+
+  <!-- HEADER -->
+  <div class="form-header">
+    <div class="header-inner">
+      <div class="badge">
+        <i class="ti ti-school" style="font-size:13px"></i>
+        Academic Year 2025 – 2026
+      </div>
+      <h1>Student Registration</h1>
+      <p>Complete all required fields to finalize your enrollment</p>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-bar">
+    <div class="step active" id="s1">
+      <div class="step-num">1</div>
+      Personal
+    </div>
+    <div class="step" id="s2">
+      <div class="step-num">2</div>
+      Academic
+    </div>
+    <div class="step" id="s3">
+      <div class="step-num">3</div>
+      Contact
+    </div>
+  </div>
+
+  <!-- FORM BODY -->
+  <div class="form-body">
+
+    <!-- Photo -->
+    <div class="photo-row">
+      <div class="photo-circle">
+        <i class="ti ti-user" aria-hidden="true"></i>
+      </div>
+      <div class="photo-info">
+        <p>Profile Photo</p>
+        <span>JPG or PNG, max 2 MB recommended</span>
+        <br>
+        <label class="upload-btn" for="photo-input">
+          <i class="ti ti-upload" style="font-size:13px;vertical-align:-2px;margin-right:4px"></i> Upload Photo
+        </label>
+        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Personal Information</div>
+
+    <div class="row">
+      <div class="field">
+        <label>First Name <span class="req">*</span></label>
+        <input type="text" id="fname" placeholder="e.g. Amara">
+      </div>
+      <div class="field">
+        <label>Last Name <span class="req">*</span></label>
+        <input type="text" id="lname" placeholder="e.g. Uwimana">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Date of Birth <span class="req">*</span></label>
+        <input type="date" id="dob">
+      </div>
+      <div class="field">
+        <label>National ID / Passport <span class="req">*</span></label>
+        <input type="text" id="nid" placeholder="ID number">
+      </div>
+    </div>
+
+    <div class="row full">
+      <div class="field">
+        <label>Gender <span class="req">*</span></label>
+        <div class="radio-group">
+          <div class="radio-opt">
+            <input type="radio" name="gender" id="male" value="male">
+            <label for="male"><i class="ti ti-gender-male" aria-hidden="true" style="font-size:15px"></i> Male</label>
+          </div>
+          <div class="radio-opt">
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="female"><i class="ti ti-gender-female" aria-hidden="true" style="font-size:15px"></i> Female</label>
+          </div>
+          <div class="radio-opt">
+            <input type="radio" name="gender" id="other" value="other">
+            <label for="other"><i class="ti ti-dots" aria-hidden="true" style="font-size:15px"></i> Other</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Academic Details</div>
+
+    <div class="row">
+      <div class="field">
+        <label>Faculty <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="faculty">
+            <option value="" disabled selected>Select faculty</option>
+            <option>Science & Technology</option>
+            <option>Business & Economics</option>
+            <option>Medicine & Health Sciences</option>
+            <option>Arts & Humanities</option>
+            <option>Law & Governance</option>
+            <option>Education</option>
+            <option>Engineering</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Programme <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="programme">
+            <option value="" disabled selected>Select programme</option>
+            <option>Bachelor's Degree</option>
+            <option>Master's Degree</option>
+            <option>PhD / Doctorate</option>
+            <option>Diploma</option>
+            <option>Certificate</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Year of Study <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="year">
+            <option value="" disabled selected>Select year</option>
+            <option>Year 1 (Freshman)</option>
+            <option>Year 2 (Sophomore)</option>
+            <option>Year 3 (Junior)</option>
+            <option>Year 4 (Senior)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Enrolment Type</label>
+        <div class="select-wrap">
+          <select>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Distance Learning</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row full">
+      <div class="field">
+        <label>Student ID (Auto-generated)</label>
+        <input type="text" value="STU-2026-XXXXX" readonly>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Contact Information</div>
+
+    <div class="row">
+      <div class="field">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="your@email.com">
+      </div>
+      <div class="field">
+        <label>Phone Number <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="+250 7XX XXX XXX">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>City / District <span class="req">*</span></label>
+        <input type="text" id="city" placeholder="e.g. Kigali">
+      </div>
+      <div class="field">
+        <label>Country <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="country">
+            <option value="" disabled selected>Select country</option>
+            <option selected>Rwanda</option>
+            <option>Uganda</option>
+            <option>Kenya</option>
+            <option>Tanzania</option>
+            <option>Burundi</option>
+            <option>DRC Congo</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row full">
+      <div class="field">
+        <label>Physical Address</label>
+        <textarea id="address" placeholder="Street address, neighbourhood, district…"></textarea>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="check-row">
+      <input type="checkbox" id="terms">
+      <label for="terms">
+        I confirm that all information provided is accurate and complete. I agree to the
+        <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a> of this institution.
+      </label>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="form-footer">
+    <button class="btn btn-ghost">
+      <i class="ti ti-arrow-left" aria-hidden="true"></i> Back
+    </button>
+    <button class="btn btn-primary" onclick="submitForm()">
+      Submit Registration <i class="ti ti-send" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+
+<!-- PROGRESS DOTS -->
+<div class="progress-dots">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">
+      <i class="ti ti-check" aria-hidden="true"></i>
+    </div>
+    <h2>Registration Successful!</h2>
+    <p>Your student registration has been submitted. Check your email for a confirmation and your student ID.</p>
+    <div class="success-id" id="generatedId">Student ID: STU-2026-04821</div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="closeSuccess()">
+      <i class="ti ti-home" aria-hidden="true"></i> Go to Dashboard
+    </button>
+  </div>
+</div>
+
+<script>
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const circle = document.querySelector('.photo-circle');
+      circle.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function submitForm() {
+  const required = [
+    {id: 'fname', name: 'First Name'},
+    {id: 'lname', name: 'Last Name'},
+    {id: 'dob', name: 'Date of Birth'},
+    {id: 'nid', name: 'National ID'},
+    {id: 'faculty', name: 'Faculty'},
+    {id: 'programme', name: 'Programme'},
+    {id: 'year', name: 'Year of Study'},
+    {id: 'email', name: 'Email Address'},
+    {id: 'phone', name: 'Phone Number'},
+    {id: 'city', name: 'City'}
+  ];
+
+  let missing = [];
+  for (let f of required) {
+    const el = document.getElementById(f.id);
+    if (!el || !el.value.trim()) { missing.push(f.name); if(el) el.style.borderColor = '#f56565'; }
+    else if(el) el.style.borderColor = '#e2e8f0';
+  }
+
+  const gender = document.querySelector('input[name="gender"]:checked');
+  if (!gender) missing.push('Gender');
+
+  const terms = document.getElementById('terms');
+  if (!terms.checked) missing.push('Terms & Conditions');
+
+  if (missing.length > 0) {
+    alert('Please complete: ' + missing.join(', '));
+    return;
+  }
+
+  // Generate ID
+  const rid = 'STU-2026-' + Math.floor(10000 + Math.random() * 90000);
+  document.getElementById('generatedId').textContent = 'Student ID: ' + rid;
+
+  // Update steps
+  ['s1','s2','s3'].forEach(id => {
+    document.getElementById(id).className = 'step done';
+    document.getElementById(id).querySelector('.step-num').textContent = '✓';
+  });
+
+  // Update dots
+  document.querySelectorAll('.dot').forEach(d => { d.style.background = 'rgba(255,255,255,0.22)'; d.style.width = '8px'; d.style.borderRadius = '50%'; });
+  document.querySelectorAll('.dot')[2].style.background = '#4fd1c5';
+
+  document.getElementById('successOverlay').classList.add('show');
+}
+
+function closeSuccess() {
+  document.getElementById('successOverlay').classList.remove('show');
+}
+</script>
+</body>
+</html>
